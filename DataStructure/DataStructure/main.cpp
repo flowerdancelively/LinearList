@@ -3,7 +3,7 @@
 int main()
 {
 	TestCase test;
-	test.testSeqList();
+	test.testList();
 	system("pause");
 	return 0;
 }
