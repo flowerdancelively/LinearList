@@ -1,6 +1,4 @@
 #pragma once
-#include"SeqList.h"
-#include"List.h"
 
 class TestCase
 {
@@ -10,5 +8,9 @@ public:
 	void testSeqList();
 
 	void testList();
+
+	void testDbList();
+
+	void testTree();
 };
 

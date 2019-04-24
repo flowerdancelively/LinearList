@@ -115,10 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CircList.h" />
+    <ClInclude Include="DbNode.h" />
     <ClInclude Include="LinearList.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="SeqList.h" />
     <ClInclude Include="TestCase.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
