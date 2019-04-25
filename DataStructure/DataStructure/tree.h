@@ -1,4 +1,5 @@
 #pragma once
+#include <stack>
 
 template<typename T>
 struct TreeNode
@@ -19,8 +20,18 @@ public:
 	TreeNode<T>*&getRoot();
 	void clearTree(TreeNode<T>*root);
 	void insert(TreeNode<T>* &root, const T&val);
+	
 	void preOrder(TreeNode<T>*root);
 	void inOrder(TreeNode<T>*root);
+	void postOrder(TreeNode<T>*root);
+
+	void preOrderNoRecursive(TreeNode<T>*root);
+	void inOrderNoRecursive(TreeNode<T>*root);
+//	void postOrderNoRecursive(TreeNode<T>*root);
+
+
+	int getHeight(TreeNode<T>*root);
+	int getHeightNoRecursive(TreeNode<T>*root);
 
 private:
 	TreeNode<T>* _root;
@@ -98,3 +109,92 @@ inline void Tree<T>::inOrder(TreeNode<T>* root)
 		inOrder(root->right);
 	}
 }
+
+template<typename T>
+inline void Tree<T>::postOrder(TreeNode<T>* root)
+{
+	if (nullptr != root)
+	{
+		postOrder(root->left);
+		postOrder(root->right);
+		cout << root->data<<" ";
+	}
+}
+
+template<typename T>
+inline void Tree<T>::preOrderNoRecursive(TreeNode<T>* root)
+{
+	std::stack<TreeNode<T>*> stack;
+	TreeNode<T>* cur;
+	if (nullptr != root)
+	{
+		stack.push(root);
+		
+		while (!stack.empty())
+		{
+			cur = stack.top();
+			if (nullptr != cur)
+			{
+				cout << cur->data << " ";
+			}
+			stack.pop();
+			if (nullptr != cur)
+			{
+				stack.push(cur->right);
+				stack.push(cur->left);
+			}
+		}
+	}
+	cout << "\n";
+}
+
+template<typename T>
+inline void Tree<T>::inOrderNoRecursive(TreeNode<T>* root)
+{
+	std::stack<TreeNode<T>*> stack;
+	TreeNode<T>* cur;
+	
+	while (!stack.empty() || nullptr != root)
+	{
+
+		while (nullptr != root)
+		{
+			stack.push(root);
+			root = root->left;
+		}
+
+		root = stack.top();
+		stack.pop();
+		cout << root->data << " ";
+		
+
+		root = root->right;
+				
+ 
+		
+	}
+	
+	
+	cout << "\n";
+
+
+}
+
+template<typename T>
+inline int Tree<T>::getHeight(TreeNode<T>* root)
+{
+	if (nullptr != root)
+	{
+		int i = 1 + getHeight(root->left);
+		int j = 1 + getHeight(root->right);
+		return i > j ? i : j;
+	}
+	return 0;
+}
+
+template<typename T>
+inline int Tree<T>::getHeightNoRecursive(TreeNode<T>* root)
+{
+	return 0;
+}
+
