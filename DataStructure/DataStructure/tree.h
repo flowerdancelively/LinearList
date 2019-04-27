@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include<queue>
 
 template<typename T>
 struct TreeNode
@@ -27,8 +28,9 @@ public:
 
 	void preOrderNoRecursive(TreeNode<T>*root);
 	void inOrderNoRecursive(TreeNode<T>*root);
-//	void postOrderNoRecursive(TreeNode<T>*root);
+	void postOrderNoRecursive(TreeNode<T>*root);
 
+	void levelOrder(TreeNode<T>*root);
 
 	int getHeight(TreeNode<T>*root);
 	int getHeightNoRecursive(TreeNode<T>*root);
@@ -152,7 +154,7 @@ template<typename T>
 inline void Tree<T>::inOrderNoRecursive(TreeNode<T>* root)
 {
 	std::stack<TreeNode<T>*> stack;
-	TreeNode<T>* cur;
+
 	
 	while (!stack.empty() || nullptr != root)
 	{
@@ -166,18 +168,70 @@ inline void Tree<T>::inOrderNoRecursive(TreeNode<T>* root)
 		root = stack.top();
 		stack.pop();
 		cout << root->data << " ";
-		
-
+	
 		root = root->right;
-				
- 
-		
+	
 	}
 	
 	
 	cout << "\n";
 
 
+}
+
+template<typename T>
+inline void Tree<T>::postOrderNoRecursive(TreeNode<T>* root)
+{
+	std::stack<TreeNode<T>*> stack;
+	TreeNode<T> *cur = root, *visited=nullptr;
+
+	while (!stack.empty() || nullptr != cur)
+	{
+
+		while (nullptr != cur)
+		{
+			
+			stack.push(cur);
+			cur = cur->left;
+		}
+		cur = stack.top();
+
+		
+		if (nullptr == cur->right || cur->right == visited)
+		{
+			cout << cur->data << " ";
+			visited = cur;
+			stack.pop();
+			cur = nullptr;
+		}
+		else
+			cur = cur->right;
+	}
+	cout << "\n";
+}
+
+template<typename T>
+inline void Tree<T>::levelOrder(TreeNode<T>* root)
+{
+	queue<TreeNode<T>*> queueTreeNode;
+
+	if (nullptr != root)
+	{
+		queueTreeNode.push(root);
+	}
+
+	while (!queueTreeNode.empty())
+	{
+		root = queueTreeNode.front();
+		queueTreeNode.pop();
+		cout << root->data << " ";
+		if (nullptr != root->left)
+			queueTreeNode.push(root->left);
+		if (nullptr != root->right)
+			queueTreeNode.push(root->right);
+		
+	}
+	cout << "\n";
 }
 
 template<typename T>

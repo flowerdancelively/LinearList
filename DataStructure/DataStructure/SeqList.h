@@ -105,6 +105,7 @@ bool SeqList<T>::setData(int i, T & x)
 	if (i<0 || i>last)
 		return false;
 	data[i] = x;
+	return true;
 }
 
 template<typename T>

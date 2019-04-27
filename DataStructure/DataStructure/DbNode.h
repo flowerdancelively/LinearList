@@ -15,7 +15,7 @@ class DbList
 {
 public:
 	DbList();
-	DbList(const DbList<T> &L );
+	DbList( DbList<T> &L );
 	
 	~DbList();
 	int size()const;
@@ -48,10 +48,11 @@ inline DbList<T>::DbList()
 }
 
 template<typename T>
-DbList<T>::DbList(const DbList<T> &L)
+DbList<T>::DbList( DbList<T> &L)
 {
 	DbNode<T>*cur = first = new DbNode<T>();
 	first->lLink = first->rLink = first;
+
 	DbNode<T>*pCur = L.getHead();
 	while (L.getHead() != pCur->lLink)
 	{
@@ -62,7 +63,7 @@ DbList<T>::DbList(const DbList<T> &L)
 		cur->lLink = temp;
 		pCur = pCur->lLink;
 	}
-	cur->rLink = first;
+	cur->lLink = first;
 }
 
 
@@ -279,6 +280,6 @@ inline DbList<T>& DbList<T>::operator=(DbList<T>& L)
 
 		pCur = pCur->lLink;
 	}
-	cur->rLink = first;
+	cur->lLink = first;
 	return *this;
 }

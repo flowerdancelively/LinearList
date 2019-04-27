@@ -3,7 +3,9 @@
 #include"List.h"
 #include "DbNode.h"
 #include "tree.h"
+#include <iostream>
 
+using std::cout;
 TestCase::TestCase()
 {
 }
@@ -45,6 +47,8 @@ void TestCase::testList()
 {
 	cout << " --------------------------testSeqList:--------------------------- \n";
 	List<int> list;
+	int rVal;
+	list.remove(0, rVal);
 	int a[10];
 	cout << "isEmpty: " << list.isEmpty() << endl;;
 
@@ -71,8 +75,10 @@ void TestCase::testList()
 
 	List<int> list3,list4;
 	list4 = list3 =  list;
-	list3.output();
-	list4.output();
+	
+	cout << list4;
+	//list3.output();
+	//list4.output();
 	cout << " --------------------------testSeqList:--------------------------- \n";
 }
 
@@ -109,11 +115,36 @@ void TestCase::testDbList()
 
 void TestCase::testTree()
 {
+	/*
+	
+	       6
+		1      9
+	       2
+		     3
+	*/
 	Tree<int> tree;
-	tree.insert(tree.getRoot(), 3);
+	tree.insert(tree.getRoot(), 6);
 	tree.insert(tree.getRoot(), 1);
-	tree.insert(tree.getRoot(), 5);
+	tree.insert(tree.getRoot(),9);
+	tree.insert(tree.getRoot(), 2);
+	tree.insert(tree.getRoot(), 3);
+
+
+	tree.preOrder(tree.getRoot());
+	cout << " \n";
+	tree.preOrderNoRecursive(tree.getRoot());
 
 
 	tree.inOrder(tree.getRoot());
+	cout << " \n";
+	tree.inOrderNoRecursive(tree.getRoot());
+
+	tree.postOrder(tree.getRoot());
+	cout << " \n";
+	tree.postOrderNoRecursive(tree.getRoot());
+
+	tree.levelOrder(tree.getRoot());
+	
+	cout << tree.getHeight(tree.getRoot());
+	cout << " \n";
 }

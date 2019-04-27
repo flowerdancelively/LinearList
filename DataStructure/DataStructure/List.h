@@ -37,6 +37,18 @@ public:
 	void input();
 	void output();
 	List<T>& operator=(List<T>&L);
+	friend ostream& operator<<(ostream&out, List<T>& L)
+	{
+
+		LinkNode<T>* cur = L.getHead();
+		while (nullptr != cur->link)
+		{
+			out << cur->link->data << " ";
+			cur = cur->link;
+		}
+		out << "\n";
+		return out;
+	}
 protected:
 	LinkNode<T>* first;
 };
@@ -57,8 +69,13 @@ template<typename T>
  List<T>::List(List<T>& L)
 {
 	 LinkNode<T>* p = L.getHead();
+	 if (first != nullptr)
+	 {
+		 delete first;
+		 first = nullptr;
+	 }
+
 	 LinkNode<T>* cur = first = new LinkNode<T>();
-	 T value;
 	 while (nullptr != p->link)
 	 {
 		 cur->link = new LinkNode<T>(p->link->data);
@@ -73,7 +90,6 @@ template<typename T>
  {
 	 //should remove all linknodes
 	 LinkNode<T>*p,*q;
-	// p = first->link;
 	 p = first;
 	 while (nullptr!=p)
 	 {
@@ -221,7 +237,7 @@ template<typename T>
 		 return false;
 	 LinkNode<T>* p = first;
 	 int cnt = 0;
-	 while (nullptr != p)
+	 while (nullptr != p->link)
 	 {
 		 if (cnt == i)
 		 {
@@ -285,3 +301,4 @@ template<typename T>
 	 cur->link = nullptr;
 	 return *this;
  }
+
