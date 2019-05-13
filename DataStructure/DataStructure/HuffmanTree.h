@@ -23,7 +23,7 @@ public:
 	~HuffmanTree() { deleteHuffmanTree(root); }
 	HuffmanNode<T>*getRoot();
 	void print();
-	void preOrder(HuffmanNode<T>*root);
+	void preOrder(HuffmanNode<T>* root);
 private:
 	HuffmanNode<T>*root;
 	void deleteHuffmanTree(HuffmanNode<T>*root);
@@ -35,30 +35,39 @@ inline HuffmanTree<T>::HuffmanTree(T *w, int n)
 {
 	//int w[] = { 5,29,7,8,14,23,3,11 };
 	MinHeap<HuffmanNode<T>> hp;
-	HuffmanNode<T>  *parent, first, second;
 	
 	for (int i= 0; i < n; i++)
 	{
 		HuffmanNode<T> work;
+
 		work.data = w[i];
 		work.left = nullptr;
 		work.right = nullptr;
 		work.parent = nullptr;
 		hp.insert(work);
 	}
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < n; i++)
 	{
 		cout << hp.heap[i].data << " ";
-
 	}
 	cout << "\n";
-	parent = nullptr;
+	HuffmanNode<T>  *parent = nullptr, first, second;
+
 	for (int i = 0; i < n - 1; i++)
 	{
 		hp.remove(first);
 		hp.remove(second);
+		cout << "first " << first.data << " second: " << second.data << "\n";
+
 		mergeHuffmanTree(first, second, parent);
-		hp.insert(*parent);
+		HuffmanNode<T> temp = *parent;
+		hp.insert(temp);
+		HuffmanNode<T> temp1;
+		for (int i = 0; i < hp.currentSize; i++)
+		{
+			//cout << hp.heap[i].data << " ";
+			temp1 = hp.heap[i];
+		}
 	}
 
 	root = parent;
@@ -74,12 +83,13 @@ inline HuffmanNode<T>* HuffmanTree<T>::getRoot()
 template<typename T>
 inline void HuffmanTree<T>::preOrder(HuffmanNode<T>* root)
 {
-	while (nullptr != root)
+	if (nullptr != root)
 	{
 		cout << root->data << endl;
 		preOrder(root->left);
 		preOrder(root->right);
 	}
+	return;
 }
 
 template<typename T>
@@ -95,13 +105,13 @@ inline void HuffmanTree<T>::mergeHuffmanTree(HuffmanNode<T> & th1, HuffmanNode<T
 	parent->left = &th1;
 	parent->right = &th2;
 	parent->data = th1.data + th2.data;
-	th1.parent = th2.parent = parent;
+	//th1.parent = th2.parent = parent;
 }
 
 template<typename T>
 inline void HuffmanTree<T>::deleteHuffmanTree(HuffmanNode<T>* root)
 {
-	while (nullptr != root)
+	if (nullptr != root)
 	{
 		HuffmanNode<T>*temp = root;
 		deleteHuffmanTree(root->left);
